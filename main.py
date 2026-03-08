@@ -36,12 +36,12 @@ for partido in partidos:
 
 print(f"Partidos contra equipos de primera actual: {len(partidos_primera)}")
 
-# Creo diccionario con historial contra cada rival
+# Creo diccionario con historial contra cada rival siendo local, visitante y total
 
 historial = {}
 
 for rival in equipos_primera_2026:
-    historial[rival] = {"Victorias":0,"Empates":0,"Derrotas":0}
+    historial[rival] = {"Local":{"Victorias":0,"Empates":0,"Derrotas":0},"Visitante":{"Victorias":0,"Empates":0,"Derrotas":0},"Total":{"Victorias":0,"Empates":0,"Derrotas":0}}
 
 # Recorro los partidos y genero los contadores
 
@@ -51,20 +51,24 @@ for partido in partidos_primera:
         resultado_belgrano = int(partido["local_result"])
         resultado_rival = int(partido["visitor_result"])
         if resultado_rival < resultado_belgrano:
-            historial[rival]["Victorias"] +=1
+            historial[rival]["Local"]["Victorias"] +=1
+            historial[rival]["Total"]["Victorias"] +=1
         elif resultado_rival > resultado_belgrano:
-            historial[rival]["Derrotas"] +=1
+            historial[rival]["Local"]["Derrotas"] +=1
+            historial[rival]["Total"]["Derrotas"] +=1
         else:
-            historial[rival]["Empates"] +=1
+            historial[rival]["Local"]["Empates"] +=1
+            historial[rival]["Total"]["Empates"] +=1
     else:
         rival = partido["local_team"]
         resultado_belgrano = int(partido["visitor_result"])
         resultado_rival = int(partido["local_result"])
         if resultado_rival < resultado_belgrano:
-            historial[rival]["Victorias"] +=1
+            historial[rival]["Visitante"]["Victorias"] +=1
+            historial[rival]["Total"]["Victorias"] +=1
         elif resultado_rival > resultado_belgrano:
-            historial[rival]["Derrotas"] +=1
+            historial[rival]["Visitante"]["Derrotas"] +=1
+            historial[rival]["Total"]["Derrotas"] +=1
         else:
-            historial[rival]["Empates"] +=1
-
-print(historial["River Plate"])
+            historial[rival]["Visitante"]["Empates"] +=1
+            historial[rival]["Total"]["Empates"] +=1
